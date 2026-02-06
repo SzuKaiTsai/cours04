@@ -1,10 +1,10 @@
 <?php
 
 use App\Http\Controllers\AchatController;
-use App\Http\Controllers\ProduitController;
+use App\Http\Controllers\CarteController;
 use Illuminate\Support\Facades\Route;
 
-Route::get("/", [ProduitController::class, "index"])
+Route::get("/", [CarteController::class, "index"])
         ->name("accueil");
 
 
