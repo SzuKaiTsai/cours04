@@ -15,34 +15,19 @@
                                 <form method="GET">
                                     <ul id="category-filters" class="shop-widget-list shop-widget-scroll">
 
-                                        <li>
-                                            <div class="shop-widget-content">
-                                                <input type="checkbox" name="categories[]" value="1">
-                                                <label>Catégorie 1</label>
-                                            </div>
-                                            <span class="shop-widget-number">(8)</span>
-                                        </li>
-                                        <li>
-                                            <div class="shop-widget-content">
-                                                <input type="checkbox" name="categories[]" value="2">
-                                                <label>Catégorie 2</label>
-                                            </div>
-                                            <span class="shop-widget-number">(4)</span>
-                                        </li>
-                                        <li>
-                                            <div class="shop-widget-content">
-                                                <input type="checkbox" name="categories[]" value="3">
-                                                <label>Catégorie 3</label>
-                                            </div>
-                                            <span class="shop-widget-number">(2)</span>
-                                        </li>
-                                        <li>
-                                            <div class="shop-widget-content">
-                                                <input type="checkbox" name="categories[]" value="4">
-                                                <label>Catégorie 4</label>
-                                            </div>
-                                            <span class="shop-widget-number">(0)</span>
-                                        </li>
+
+                                        @foreach ($categories as $categorie)
+                                            <li>
+                                                <div class="shop-widget-content">
+                                                    <input type="checkbox" name="categories[]" value="{{$categorie->id}}">
+                                                    <label>{{$categorie->nom}}</label>
+                                                </div>
+                                                <span class="shop-widget-number">
+                                                    ({{$categorie->cartes->count()}})
+                                                </span>
+                                            </li>
+
+                                         @endforeach
 
                                     </ul>
                                     <button type="submit" class="shop-widget-btn mb-2">
@@ -80,6 +65,7 @@
 
                                 <div class="row row-cols-2 row-cols-md-3 row-cols-lg-3 row-cols-xl-4">
                                     <!-- Produits -->
+                                    @forelse ($cartes as $carte)
                                         <div class="col">
                                             <div class="product-card">
                                                 <div class="product-media">
@@ -88,8 +74,11 @@
                                                     </button>
 
                                                     <a class="product-image" href="#">
-
+                                                            @if($carte->imagePath)
+                                                            <img src="{{asset($carte->imagePath)}}" alt="product">
+                                                            @else
                                                             <img src="{{asset('images/produits/image-non-disponible.jpg')}}" alt="product">
+                                                            @endif
 
                                                     </a>
 
@@ -102,10 +91,10 @@
                                                 </div>
                                                 <div class="product-content">
                                                     <h6 class="product-name">
-                                                        <a href="#">Produit 1</a>
+                                                        <a href="#">{{$carte->nom}}</a>
                                                     </h6>
                                                     <h6 class="product-price">
-                                                        <span>6,99
+                                                        <span>{{$carte->prix}}
                                                             $<small>/unité</small>
                                                         </span>
                                                     </h6>
@@ -120,167 +109,13 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col">
-                                            <div class="product-card">
-                                                <div class="product-media">
-                                                    <button class="product-wish wish">
-                                                        <i class="fas fa-heart"></i>
-                                                    </button>
 
-                                                    <a class="product-image" href="#">
-
-                                                            <img src="{{asset('images/produits/image-non-disponible.jpg')}}" alt="product">
-
-                                                    </a>
-
-                                                    <div class="product-widget">
-                                                        <a title="Voir détail"
-                                                            href="#"
-                                                            class="fas fa-eye product-view" data-bs-toggle="modal"
-                                                            data-bs-target="#product-view"></a>
-                                                    </div>
-                                                </div>
-                                                <div class="product-content">
-                                                    <h6 class="product-name">
-                                                        <a href="#">Produit 2</a>
-                                                    </h6>
-                                                    <h6 class="product-price">
-                                                        <span>16,99
-                                                            $<small>/unité</small>
-                                                        </span>
-                                                    </h6>
-
-                                                    <form method="POST" action="#">
-
-                                                        <button type="submit" class="product-add" title="Ajouter au panier">
-                                                            <i class="fas fa-shopping-basket"></i>
-                                                            <span>Ajouter</span>
-                                                        </button>
-                                                    </form>
-                                                </div>
-                                            </div>
+                                    @empty
+                                        <div class="no-result-card">
+                                            Aucune carte ne correspond à vos critères de recherche
                                         </div>
-                                        <div class="col">
-                                            <div class="product-card">
-                                                <div class="product-media">
-                                                    <button class="product-wish wish">
-                                                        <i class="fas fa-heart"></i>
-                                                    </button>
+                                    @endforelse
 
-                                                    <a class="product-image" href="#">
-
-                                                            <img src="{{asset('images/produits/image-non-disponible.jpg')}}" alt="product">
-
-                                                    </a>
-
-                                                    <div class="product-widget">
-                                                        <a title="Voir détail"
-                                                            href="#"
-                                                            class="fas fa-eye product-view" data-bs-toggle="modal"
-                                                            data-bs-target="#product-view"></a>
-                                                    </div>
-                                                </div>
-                                                <div class="product-content">
-                                                    <h6 class="product-name">
-                                                        <a href="#">Produit 3</a>
-                                                    </h6>
-                                                    <h6 class="product-price">
-                                                        <span>298,99
-                                                            $<small>/unité</small>
-                                                        </span>
-                                                    </h6>
-
-                                                    <form method="POST" action="#">
-
-                                                        <button type="submit" class="product-add" title="Ajouter au panier">
-                                                            <i class="fas fa-shopping-basket"></i>
-                                                            <span>Ajouter</span>
-                                                        </button>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col">
-                                            <div class="product-card">
-                                                <div class="product-media">
-                                                    <button class="product-wish wish">
-                                                        <i class="fas fa-heart"></i>
-                                                    </button>
-
-                                                    <a class="product-image" href="#">
-
-                                                            <img src="{{asset('images/produits/image-non-disponible.jpg')}}" alt="product">
-
-                                                    </a>
-
-                                                    <div class="product-widget">
-                                                        <a title="Voir détail"
-                                                            href="#"
-                                                            class="fas fa-eye product-view" data-bs-toggle="modal"
-                                                            data-bs-target="#product-view"></a>
-                                                    </div>
-                                                </div>
-                                                <div class="product-content">
-                                                    <h6 class="product-name">
-                                                        <a href="#">Produit 4</a>
-                                                    </h6>
-                                                    <h6 class="product-price">
-                                                        <span>119,99
-                                                            $<small>/unité</small>
-                                                        </span>
-                                                    </h6>
-
-                                                    <form method="POST" action="#">
-
-                                                        <button type="submit" class="product-add" title="Ajouter au panier">
-                                                            <i class="fas fa-shopping-basket"></i>
-                                                            <span>Ajouter</span>
-                                                        </button>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col">
-                                            <div class="product-card">
-                                                <div class="product-media">
-                                                    <button class="product-wish wish">
-                                                        <i class="fas fa-heart"></i>
-                                                    </button>
-
-                                                    <a class="product-image" href="#">
-
-                                                            <img src="{{asset('images/produits/image-non-disponible.jpg')}}" alt="product">
-
-                                                    </a>
-
-                                                    <div class="product-widget">
-                                                        <a title="Voir détail"
-                                                            href="#"
-                                                            class="fas fa-eye product-view" data-bs-toggle="modal"
-                                                            data-bs-target="#product-view"></a>
-                                                    </div>
-                                                </div>
-                                                <div class="product-content">
-                                                    <h6 class="product-name">
-                                                        <a href="#">Produit 5</a>
-                                                    </h6>
-                                                    <h6 class="product-price">
-                                                        <span>79,99
-                                                            $<small>/unité</small>
-                                                        </span>
-                                                    </h6>
-
-                                                    <form method="POST" action="#">
-
-                                                        <button type="submit" class="product-add" title="Ajouter au panier">
-                                                            <i class="fas fa-shopping-basket"></i>
-                                                            <span>Ajouter</span>
-                                                        </button>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                </div>
                         </div>
                     </div>
                 </div>
