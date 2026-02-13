@@ -13,7 +13,7 @@ class CarteController extends Controller
      *
      * @return View
      */
-    public function index(){
+    public function index(Request $request){
 
         // retrieve all cards
         // $cartes = Carte::all();
@@ -75,9 +75,21 @@ class CarteController extends Controller
 
         ////////////////////////
 
+        $recherche = $request->input('recherche');
+
         return view("produits.index",[
             "cartes" => Carte::all(),
             "categories" => Categorie::all()
         ]);
+
+
+    }
+
+    public function show(int $id){
+
+            return view("produits.show",[
+                "carte" => Carte::findOrFail($id),
+                "categories" => Categorie::all()
+            ]);
     }
 }

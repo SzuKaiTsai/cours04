@@ -19,7 +19,7 @@
                         <span>S'inscrire</span>
                     </a>
 
-                    <form class="header-form" method="POST">
+                    <form class="header-form" method="GET" action="{{ route('accueil') }}">
                         <input
                             type="text"
                             placeholder="Rechercher ..."
