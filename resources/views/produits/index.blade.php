@@ -12,14 +12,19 @@
                         <div class="col-lg-3">
                             <div class="shop-widget">
                                 <h6 class="shop-widget-title">Filtrer par catégorie</h6>
-                                <form method="GET">
+                                <form method="GET" action="{{ route('accueil') }}">
                                     <ul id="category-filters" class="shop-widget-list shop-widget-scroll">
 
 
                                         @foreach ($categories as $categorie)
                                             <li>
                                                 <div class="shop-widget-content">
-                                                    <input type="checkbox" name="categories[]" value="{{$categorie->id}}">
+                                                    <input
+                                                        type="checkbox"
+                                                        name="categories[]"
+                                                        value="{{ $categorie->id }}"
+                                                        @checked($filtres->contains($categorie->id))
+                                                    >
                                                     <label>{{$categorie->nom}}</label>
                                                 </div>
                                                 <span class="shop-widget-number">
@@ -84,7 +89,7 @@
 
                                                     <div class="product-widget">
                                                         <a title="Voir détail"
-                                                            href="#"
+                                                            href="{{ route('cartes.showAjax', ["id" => $carte->id]) }}"
                                                             class="fas fa-eye product-view" data-bs-toggle="modal"
                                                             data-bs-target="#product-view"></a>
                                                     </div>
@@ -121,6 +126,7 @@
                 </div>
             </section>
 
+            {{-- Modale --}}
             <div class="modal fade" id="product-view">
                 <div class="modal-dialog">
                     <div id="product-modal-content" class="modal-content">

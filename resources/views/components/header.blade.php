@@ -24,6 +24,7 @@
                             type="text"
                             placeholder="Rechercher ..."
                             name="recherche"
+                            value="{{ request()->recherche }}"
                         />
                         <button type="submit">
                             <i class="fas fa-search"></i>

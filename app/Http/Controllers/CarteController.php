@@ -74,15 +74,31 @@ class CarteController extends Controller
 
 
         ////////////////////////
+        $filtres=collect([]);
 
-        $recherche = $request->input('recherche');
+        if($request->has('recherche')){
+            $recherche = $request->input('recherche');
 
-        return view("produits.index",[
-            "cartes" => Carte::all(),
-            "categories" => Categorie::all()
+            $cartes = Carte::whereLike('nom', "%$recherche%")
+                        ->orWhereLike('description', "%$recherche%")
+                        ->get();
+        } else if($request->has('categories')){
+            $categories = $request->categories;
+            $cartes = Carte::whereIn('categorie_id', $categories)->get();
+
+            $filtres = collect($categories);
+
+        } else {
+            $cartes = Carte::all();
+        }
+
+        $categories = Categorie::all();
+
+        return view('produits.index', [
+                "cartes" => $cartes,
+                "categories" => $categories,
+                "filtres" => $filtres
         ]);
-
-
     }
 
     public function show(int $id){
@@ -92,4 +108,11 @@ class CarteController extends Controller
                 "categories" => Categorie::all()
             ]);
     }
+
+    public function showAjax(int $id) {
+        return view("produits._show", [
+            "carte" => Carte::findOrFail($id)
+        ]);
+    }
+
 }
